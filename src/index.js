@@ -7,14 +7,14 @@ dotenv.config({
     path:'./env'
 })
 connectdb()
-// .then(()=>{
-//     app.listen(process.env.PORT || 8000,()=>{
-//         console.log(`server listing at : ${process.env.PORT}`);
-//     })
-// })
-// .catch((error)=>{
-//     console.log("erro occured ",error);
-// })
+.then(()=>{
+    app.listen(process.env.PORT || 8000,()=>{
+        console.log(`server listing at : ${process.env.PORT}`);
+    })
+})
+.catch((error)=>{
+    console.log("error occured ",error);
+})
 
 
 

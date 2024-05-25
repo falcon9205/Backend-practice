@@ -6,7 +6,7 @@ const asyncHandler = (requesthandler) =>{
 }
 
 
-export default asyncHandler;
+export {asyncHandler};
 
 // const asyncHandler = (fn)=> async(req,res,next)=>{        //higher order function taking funciton as a parameter
 //    try{
