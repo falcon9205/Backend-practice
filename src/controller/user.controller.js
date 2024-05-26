@@ -2,11 +2,10 @@ import {asyncHandler} from "../utils/asyncHandler.js"
 import Apierror from "../utils/ApiError.js"
 import {User} from "../models/user.models.js"
 import { uploadCloudinary } from "../utils/Cloudinary.js"
+import { ApiResponse } from "../utils/ApiResponse.js"
 
 const registerUser = asyncHandler(async (req,res)=>{
-    res.status(200).json({
-        message: "ok"
-    })
+  
     //get user from frontend
     //validation - not empty
     //check if user already exist
@@ -39,7 +38,27 @@ const registerUser = asyncHandler(async (req,res)=>{
   const avatar = await uploadCloudinary(avatarLocalPath)
   const coverImage = await uploadCloudinary(coverImageLocalPath)
   
+  if(!avatar)
+     throw new Apierror(400,"need avatar") 
+  
+  const user = await User.create({
+    fullname,
+    avatar : avatar.url,
+    coverImage:  coverImage?.url || "",
+    email,
+    password,
+    username : username.toLowerCase()
+  })
 
+const createduser = await User.findById(user._id).select(
+  "-password -refreshToken"
+)
+if(!createduser)
+   throw new Apierror(500 , "something went wrong while registering the user")
+
+return res.status(201).json({
+  new ApiResponse(200,createduser,"user registered successfully")
+})
 })
 
 export {registerUser}

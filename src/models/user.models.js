@@ -29,12 +29,6 @@ const UserSchema = new mongoose.Schema(
         lowercase : true,
         trim : true
     },
-    email : {
-        type:String,
-        required : true,
-        trim : true,
-        index:true
-    },
     avatar : {
         type : String, //cloud based URL services
         required:true,
