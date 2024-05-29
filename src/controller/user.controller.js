@@ -4,6 +4,21 @@ import { User } from "../models/user.models.js";
 import { uploadCloudinary } from "../utils/Cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
+const generateAccessAndRefreshToken = async (userid)=>{
+  try{
+        const user = await User.findById(userid)
+       const accesstoken =  user.generateAccessToken()
+       const refreshtoken = user.generateRefreshToken()
+       user.refreshtoken = refreshtoken
+       await user.save({validateBeforeSave: false})
+
+       return {accesstoken,refreshtoken}
+
+  } catch(error){
+    throw new Apierror(500,"failed to generate tokens")
+  }
+}
+
 const registerUser = asyncHandler(async (req, res) => {
   //get user from frontend
   //validation - not empty
@@ -70,4 +85,33 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 });
 
-export { registerUser };
+const loginUser = asyncHandler(async (req,res)=>{
+  //get data from req body
+  // authenticate username or email
+  // find the user in DB
+  // password check
+  // access and refresh token
+  // send cookie
+
+  const {username,password,email} = req.body
+
+  if(!username || !email)
+    throw new Apierror(400,"username or password is required")
+
+  const user =await User.findOne({
+    $or:[{username},{email}]
+  })
+  
+  if(!user)
+     throw new Apierror(404,"user not found")
+
+  const isPasswordValid = await user.isPasswordCorrect(password)
+
+  if(!isPasswordValid)
+     throw new ApiResponse(401,"password incorrect")
+
+  const {accesstoken,refreshtoken} =await generateAccessAndRefreshToken(user._id)
+
+})
+
+export { registerUser , loginUser };
