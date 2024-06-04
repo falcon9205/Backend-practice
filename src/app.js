@@ -8,7 +8,6 @@ const app = express()
 app.use(cors({
     origin:process.env.CORS,
     credentials: true
-
 }))
 
 app.use(express.json({
@@ -28,6 +27,8 @@ app.use(cookieParser())
 
 
 app.use("/users",userRouter)
+
+app.use("/",userRouter)
 
 
 
