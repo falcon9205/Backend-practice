@@ -31,6 +31,6 @@ router.route("/logout").post(verifyJWT, logoutUser);
 
 router.route("/refreshToken").post(refreshAccessToken)
 
-router.route("/panda").post(testing)
+router.route("/panda").post(testing) //testing matter
 
 export default router;
