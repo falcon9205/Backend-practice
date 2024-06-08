@@ -314,5 +314,4 @@ const testing = asyncHandler(async(req,res)=>{
   })
 })
 
-export { registerUser, loginUser, logoutUser , refreshAccessToken, testing,changeCurrentPassword,currentUser,updateAccountDetails };
-x
+export { registerUser, loginUser, logoutUser , refreshAccessToken, testing,changeCurrentPassword,currentUser,updateAccountDetails,updateAvatar,updateCoverImage };
