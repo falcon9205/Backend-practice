@@ -15,24 +15,3 @@ connectdb()
 .catch((error)=>{
     console.log("error occured ",error);
 })
-
-
-
-// import express from "express"
-// const app = express()
-
-// (async()=>{
-//    try{
-//     await mongoose.connect(process.env.DB_URL)
-//     app.on("error",(error)=>{
-//         console.log("error",error);
-//         throw error
-//     })
-//     app.listen(process.env.PORT,()=>{
-//         console.log("listing at ",PORT);
-//     })
-//    } catch(error){
-//     console.log("error");
-//     throw err
-//    }
-// })()
